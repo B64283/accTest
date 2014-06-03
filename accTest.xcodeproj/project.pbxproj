@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2423EDC9193DBC51007FB26F /* TwitterUserPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 2423EDC8193DBC51007FB26F /* TwitterUserPost.m */; };
 		243246DB193D993D005ECC30 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243246DA193D993D005ECC30 /* Social.framework */; };
 		244FB27E193D5FFE00DEC767 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 244FB27D193D5FFE00DEC767 /* Foundation.framework */; };
 		244FB280193D5FFE00DEC767 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 244FB27F193D5FFE00DEC767 /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2423EDC7193DBC51007FB26F /* TwitterUserPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterUserPost.h; sourceTree = "<group>"; };
+		2423EDC8193DBC51007FB26F /* TwitterUserPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterUserPost.m; sourceTree = "<group>"; };
 		243246DA193D993D005ECC30 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		244FB27A193D5FFE00DEC767 /* accTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		244FB27D193D5FFE00DEC767 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,6 +130,8 @@
 				244FB293193D5FFE00DEC767 /* ViewController.m */,
 				244FB295193D5FFE00DEC767 /* Images.xcassets */,
 				244FB284193D5FFE00DEC767 /* Supporting Files */,
+				2423EDC7193DBC51007FB26F /* TwitterUserPost.h */,
+				2423EDC8193DBC51007FB26F /* TwitterUserPost.m */,
 			);
 			path = accTest;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2423EDC9193DBC51007FB26F /* TwitterUserPost.m in Sources */,
 				244FB294193D5FFE00DEC767 /* ViewController.m in Sources */,
 				244FB28E193D5FFE00DEC767 /* AppDelegate.m in Sources */,
 				244FB28A193D5FFE00DEC767 /* main.m in Sources */,
