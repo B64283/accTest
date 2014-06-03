@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import <Accounts/accounts.h>
 #import <Social/Social.h>
+#import "TwitterUserPost.h"
 @interface ViewController ()
 
 @end
@@ -18,6 +19,10 @@
 - (void)viewDidLoad
 {
    //call refreshTwitter for later use has own method
+    
+    
+    twitterPosts = [[NSMutableArray alloc]init];
+    
     [self refreshTwitter];
     
     
@@ -28,6 +33,10 @@
 
 - (void)didReceiveMemoryWarning
 {
+    
+    
+    
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -70,12 +79,24 @@
                                     
             //create a custom object for a tableView, info can be found from dictionary twitterfeed
                                     // NSDIctionary grabs what ever you need from the account exaple: firstPost
+                                   
                                     
-                                    NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
+                                    //loop through all posts returned from feed
+                                    for (NSInteger i=0; i<[twitterFeed count]; i++)
+                                    {
+                                        TwitterUserPost *postInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
+                                        
+                                        if (postInfo != nil)
+                                        {
+                                            [twitterPosts addObject:postInfo];
+                                        }
+                                    }
+                                    
+                                    //NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
                                     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     
-                                    NSLog(@"firstPost = %@", [firstPost description]);
+                                    //NSLog(@"firstPost = %@", [firstPost description]);
                                 }
                             }];
                         }
@@ -98,7 +119,17 @@
     
 }
 
-
+-(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
+{
+    TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
+    
+    
+    NSString *timeDateString = [postDictionary valueForKey:@"created_at"];
+    
+    return postInfo;
+    
+    
+}
 
 
 @end

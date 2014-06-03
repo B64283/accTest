@@ -9,5 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @interface TwitterUserPost : NSObject
+{
+    NSString *timeDate;
+    NSString *tweetText;
+    
+    UIImage *userIcon;
+    
+    
+}
+@property (nonatomic, readonly)NSString *timeDate;
+@property (nonatomic, readonly)NSString *tweetText;
+
+@property (nonatomic, readonly)UIImage *userIcon;
+
+-(id)initWithPostInfo:(NSString*)timeDateInfo userIconInfo:(UIImage*)userIconInfo text:(NSString*)text;
+
 
 @end
