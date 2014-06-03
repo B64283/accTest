@@ -86,7 +86,7 @@
                 //need else cause if user says no every thing will be denied
                 else
                 {
-                    //user says NO No No
+                    //user says NO
                     
                 }
             }];
