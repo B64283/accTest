@@ -121,10 +121,15 @@
 
 -(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
 {
-    TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
     
+    //gets info from postDictionary, puts them into strings, and creates postinfo twitter objects.
     
     NSString *timeDateString = [postDictionary valueForKey:@"created_at"];
+    NSDictionary *userDictionary = [postDictionary objectForKey:@"user"];
+    NSString *tweetText = [postDictionary valueForKey:@"text"];
+    UIImage *userIcon = [userDictionary valueForKey:@"profile_image_url"];
+    
+    TwitterUserPost *postInfo = [[TwitterUserPost alloc]initWithPostInfo:timeDateString userIconInfo:userIcon text:tweetText];
     
     return postInfo;
     
