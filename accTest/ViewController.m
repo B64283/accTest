@@ -10,18 +10,22 @@
 #import <Accounts/accounts.h>
 #import <Social/Social.h>
 #import "TwitterUserPost.h"
+#import "CustomCell.h"
+#import "DetailViewController.h"
+#import "ProfileViewController.h"
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
 
+
 - (void)viewDidLoad
 {
    //call refreshTwitter for later use has own method
     
-    
-    twitterPosts = [[NSMutableArray alloc]init];
+    //initialize array
+    twitterFeed = [[NSMutableArray alloc]init];
     
     [self refreshTwitter];
     
@@ -54,6 +58,8 @@
                 if (granted)
                 {
                     //sucsess we have access
+                    
+                   //makes array of twitter AcctStore
                     NSArray *twitterAccts = [accountStore accountsWithAccountType:accountType];
                     if (twitterAccts != nil)
                     {
@@ -74,23 +80,23 @@
                                 if ((error == nil) && ([urlResponse statusCode] == 200))
                                 {
                                    
-                                    NSArray *twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                                    twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     
             //create a custom object for a tableView, info can be found from dictionary twitterfeed
                                     // NSDIctionary grabs what ever you need from the account exaple: firstPost
                                    
                                     
-                                    //loop through all posts returned from feed
-                                    for (NSInteger i=0; i<[twitterFeed count]; i++)
+                                   ///loop through all posts returned from twitterfeed
+                                   /* for (NSInteger i=0; i<[twitterFeed count]; i++)
                                     {
                                         TwitterUserPost *postInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
                                         
-                                        if (postInfo != nil)
+                                if (postInfo != nil)
                                         {
                                             [twitterPosts addObject:postInfo];
                                         }
-                                    }
+                                    }*/
                                     
                                     //NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
                                     
@@ -119,22 +125,99 @@
     
 }
 
--(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
+-(IBAction)exit:(id)sender
 {
     
-    //gets info from postDictionary, puts them into strings, and creates postinfo twitter objects.
+}
+
+
+-(IBAction)profile:(id)sender
+{
     
-    NSString *timeDateString = [postDictionary valueForKey:@"created_at"];
-    NSDictionary *userDictionary = [postDictionary objectForKey:@"user"];
-    NSString *tweetText = [postDictionary valueForKey:@"text"];
-    UIImage *userIcon = [userDictionary valueForKey:@"profile_image_url"];
+    [self performSegueWithIdentifier:@"profileViewController" sender:self];
+}
+
+
+
+
+//split segue sends info to the different views
+// take the info and turn it into a string and put the string into the lable
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"profileViewController"])
+        
+    {
+        ProfileViewController *profileInfo = segue.destinationViewController;
+        
+        ///add info
     
-    TwitterUserPost *postInfo = [[TwitterUserPost alloc]initWithPostInfo:timeDateString userIconInfo:userIcon text:tweetText];
     
-    return postInfo;
+    }
+    else if ([segue.identifier isEqualToString:@"DetailViewController"])
+        
+    {
+        DetailViewController *tweetInfo = segue.destinationViewController;
+        
+        //add Info
+    
+    }
+    
+}
+
+
+
+
+
+//post tweet method
+-(IBAction)onClick:(id)sender
+{
+    SLComposeViewController *slComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [slComposeViewController addImage:[UIImage imageNamed:@"1351606352852.jpg"]];
+    [slComposeViewController setInitialText:@"Posted from Sweet Tweet"];
+    [self presentViewController: slComposeViewController animated:true completion:nil];
     
     
 }
+//refresh twitter feed
+
+-(IBAction)Reload:(id)sender
+{
+    
+    [self refreshTwitter];
+    
+    
+}
+
+//returns array for count number of rows
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [twitterFeed count];
+
+}
+
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCustomCell"];
+        if (cell != nil)
+        {
+        
+        
+        
+        
+        
+        
+        
+        }
+    
+    return cell;
+
+}
+
+
+
 
 
 @end

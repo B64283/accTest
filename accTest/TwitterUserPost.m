@@ -13,25 +13,11 @@
 
 
 
-@synthesize timeDate, tweetText, userIcon;
+@synthesize timeDate, tweetText, userIcon, name, followers,following;
 
 
 
 
--(id)initWithPostInfo:(NSString*)timeDateInfo userIconInfo:(UIImage*)userIconInfo text:(NSString*)text
-{
-    if ((self = [super init]))
-    {
-        
-    userIcon = [userIcon copy];
-    
-    timeDateInfo = [timeDate copy];
-    
-    text = [text copy];
-    
-    }
-    return self;
-}
 
 
 

@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *twitterPosts;
     
+    // *twitterFeed;
+    
+    NSMutableArray *twitterFeed;
+    IBOutlet UITableView *MyTableView;
     
 }
+-(IBAction)Reload:(id)sender;
+
+-(IBAction)onClick:(id)sender;
+-(IBAction)profile:(id)sender;
+-(IBAction)refresh:(id)sender;
+
 @end

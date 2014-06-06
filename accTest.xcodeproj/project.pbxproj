@@ -24,6 +24,10 @@
 		244FB2A7193D5FFF00DEC767 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 244FB2A5193D5FFF00DEC767 /* InfoPlist.strings */; };
 		244FB2A9193D5FFF00DEC767 /* accTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 244FB2A8193D5FFF00DEC767 /* accTestTests.m */; };
 		244FB2B3193D847D00DEC767 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 244FB2B2193D847D00DEC767 /* Accounts.framework */; };
+		24C043ED193EE8FB0086046D /* 1351606352852.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 24C043EC193EE8FB0086046D /* 1351606352852.jpg */; };
+		24C043F3193EFE1C0086046D /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C043F2193EFE1C0086046D /* DetailViewController.m */; };
+		24C043F6193EFF630086046D /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C043F5193EFF630086046D /* ProfileViewController.m */; };
+		24C043F9193F080A0086046D /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C043F8193F080A0086046D /* CustomCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,13 @@
 		244FB2A6193D5FFF00DEC767 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		244FB2A8193D5FFF00DEC767 /* accTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = accTestTests.m; sourceTree = "<group>"; };
 		244FB2B2193D847D00DEC767 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		24C043EC193EE8FB0086046D /* 1351606352852.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1351606352852.jpg; path = ../../../1351606352852.jpg; sourceTree = "<group>"; };
+		24C043F1193EFE1C0086046D /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		24C043F2193EFE1C0086046D /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		24C043F4193EFF630086046D /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		24C043F5193EFF630086046D /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		24C043F7193F080A0086046D /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		24C043F8193F080A0086046D /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,15 +134,22 @@
 		244FB283193D5FFE00DEC767 /* accTest */ = {
 			isa = PBXGroup;
 			children = (
+				24C043EC193EE8FB0086046D /* 1351606352852.jpg */,
 				244FB28C193D5FFE00DEC767 /* AppDelegate.h */,
 				244FB28D193D5FFE00DEC767 /* AppDelegate.m */,
 				244FB28F193D5FFE00DEC767 /* Main.storyboard */,
-				244FB292193D5FFE00DEC767 /* ViewController.h */,
-				244FB293193D5FFE00DEC767 /* ViewController.m */,
 				244FB295193D5FFE00DEC767 /* Images.xcassets */,
 				244FB284193D5FFE00DEC767 /* Supporting Files */,
 				2423EDC7193DBC51007FB26F /* TwitterUserPost.h */,
 				2423EDC8193DBC51007FB26F /* TwitterUserPost.m */,
+				244FB292193D5FFE00DEC767 /* ViewController.h */,
+				244FB293193D5FFE00DEC767 /* ViewController.m */,
+				24C043F1193EFE1C0086046D /* DetailViewController.h */,
+				24C043F2193EFE1C0086046D /* DetailViewController.m */,
+				24C043F4193EFF630086046D /* ProfileViewController.h */,
+				24C043F5193EFF630086046D /* ProfileViewController.m */,
+				24C043F7193F080A0086046D /* CustomCell.h */,
+				24C043F8193F080A0086046D /* CustomCell.m */,
 			);
 			path = accTest;
 			sourceTree = "<group>";
@@ -244,6 +262,7 @@
 				244FB296193D5FFE00DEC767 /* Images.xcassets in Resources */,
 				244FB288193D5FFE00DEC767 /* InfoPlist.strings in Resources */,
 				244FB291193D5FFE00DEC767 /* Main.storyboard in Resources */,
+				24C043ED193EE8FB0086046D /* 1351606352852.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +285,9 @@
 				244FB294193D5FFE00DEC767 /* ViewController.m in Sources */,
 				244FB28E193D5FFE00DEC767 /* AppDelegate.m in Sources */,
 				244FB28A193D5FFE00DEC767 /* main.m in Sources */,
+				24C043F9193F080A0086046D /* CustomCell.m in Sources */,
+				24C043F6193EFF630086046D /* ProfileViewController.m in Sources */,
+				24C043F3193EFE1C0086046D /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

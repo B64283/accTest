@@ -7,22 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 @interface TwitterUserPost : NSObject
 {
-    NSString *timeDate;
-    NSString *tweetText;
-    
-    UIImage *userIcon;
-    
+        
     
 }
-@property (nonatomic, readonly)NSString *timeDate;
-@property (nonatomic, readonly)NSString *tweetText;
-
-@property (nonatomic, readonly)UIImage *userIcon;
-
--(id)initWithPostInfo:(NSString*)timeDateInfo userIconInfo:(UIImage*)userIconInfo text:(NSString*)text;
-
-
+@property (nonatomic, strong)NSString *timeDate;
+@property (nonatomic, strong)NSString *tweetText;
+@property (nonatomic, strong)UIImage *userIcon;
+@property (nonatomic, strong)NSString *name;
+@property (nonatomic,strong)NSString *followers;
+@property (nonatomic,strong)NSString *following;
 @end
