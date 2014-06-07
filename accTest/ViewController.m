@@ -25,7 +25,7 @@
    //call refreshTwitter for later use has own method
     
     //initialize array
-    twitterFeed = [[NSMutableArray alloc]init];
+    twitterPosts = [[NSMutableArray alloc]init];
     
     [self refreshTwitter];
     
@@ -80,29 +80,29 @@
                                 if ((error == nil) && ([urlResponse statusCode] == 200))
                                 {
                                    
-                                    twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                                  NSArray *twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                    
+                                    //return twitterFeed;
             //create a custom object for a tableView, info can be found from dictionary twitterfeed
                                     // NSDIctionary grabs what ever you need from the account exaple: firstPost
                                    
                                     
                                    ///loop through all posts returned from twitterfeed
-                                   /* for (NSInteger i=0; i<[twitterFeed count]; i++)
+                                    for (NSInteger i=0; i<[twitterFeed count]; i++)
                                     {
-                                        TwitterUserPost *postInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
+                            TwitterUserPost *postInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
                                         
                                 if (postInfo != nil)
                                         {
                                             [twitterPosts addObject:postInfo];
                                         }
-                                    }*/
+                                    }
                                     
                                     //NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
                                     
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                                     
-                                    //NSLog(@"firstPost = %@", [firstPost description]);
+                                   //NSLog(@"firstPost = %@", [firstPost description]);
                                 }
                             }];
                         }
@@ -125,44 +125,45 @@
     
 }
 
+
+-(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
+{
+    TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
+    
+    
+    NSString *timeDate = [postDictionary valueForKey:@"created_at"];
+    NSString *userDictionary = [postDictionary objectForKey:@"user"];
+    NSString *tweetText = [postDictionary valueForKey:@"text"];
+    NSString *following = [userDictionary valueForKey:@"following"];
+    NSString *name = [userDictionary valueForKeyPath:@"name"];
+    NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
+    
+    return postInfo;
+    
+    
+    
+    
+    
+}
+
+
+
+
+
 -(IBAction)exit:(id)sender
 {
     
 }
 
 
--(IBAction)profile:(id)sender
+/*-(IBAction)profile:(id)sender
 {
     
-    [self performSegueWithIdentifier:@"profileViewController" sender:self];
-}
+    [self performSegueWithIdentifier:@"toProfile" sender:self];
+}*/
 
 
 
-
-//split segue sends info to the different views
-// take the info and turn it into a string and put the string into the lable
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"profileViewController"])
-        
-    {
-        ProfileViewController *profileInfo = segue.destinationViewController;
-        
-        ///add info
-    
-    
-    }
-    else if ([segue.identifier isEqualToString:@"DetailViewController"])
-        
-    {
-        DetailViewController *tweetInfo = segue.destinationViewController;
-        
-        //add Info
-    
-    }
-    
-}
 
 
 
@@ -180,7 +181,7 @@
 }
 //refresh twitter feed
 
--(IBAction)Reload:(id)sender
+-(IBAction)Refresh:(id)sender
 {
     
     [self refreshTwitter];
@@ -188,10 +189,15 @@
     
 }
 
+
+
+
+
+
 //returns array for count number of rows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [twitterFeed count];
+    return [twitterPosts count];
 
 }
 
@@ -204,17 +210,77 @@
         if (cell != nil)
         {
         
-        
-        
-        
-        
-        
+            
+            
+            
+            TwitterUserPost *currentTweet = [twitterPosts objectAtIndex:indexPath.row];
+            
+        NSDictionary *postDictionary = [twitterPosts objectAtIndex:indexPath.row];
+           
+            NSString *timeDate = [postDictionary valueForKey:@"created_at"];
+            NSString *userDictionary = [postDictionary objectForKey:@"user"];
+            NSString *tweetText = [postDictionary valueForKey:@"text"];
+            NSString *following = [userDictionary valueForKey:@"following"];
+            NSString *name = [userDictionary valueForKeyPath:@"name"];
+            NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
+            
+   
+            
+//I know, I know, I'M doing it wrong. PLEASE HELP!!!
+            
+//im tring to do it like last time but my brains are scrambled and its seems very different
+            
+            
+            [cell refreshCellWithInfo:currentTweet.name secondString:currentTweet.tweetText cellImage:currentTweet.userIcon];
+            
+            cell.detailTextLabel.text = currentTweet.description;
+            
         
         }
     
     return cell;
-
 }
+
+        
+//split segue sends info to the different views
+// take the info and turn it into a string and put the string into the lable
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"toProfile"])
+        
+    {
+        
+        ProfileViewController *profileViewController = segue.destinationViewController;
+        
+        UITableViewCell *cell = (UITableViewCell*)sender;
+        NSIndexPath *indexPath = [MyTableView indexPathForCell:cell];
+        
+        // get the string in the array based on the item in the table view that's clicked on
+        TwitterUserPost *currentProfile = [twitterPosts objectAtIndex:indexPath.row];
+        
+        profileViewController.currentProfile = currentProfile;///add info
+        
+        
+    }
+    else if ([segue.identifier isEqualToString:@"DetailViewController"])
+        
+    {
+        DetailViewController *detailViewController = segue.destinationViewController;
+        
+        UITableViewCell *cell = (UITableViewCell*)sender;
+        NSIndexPath *indexPath = [MyTableView indexPathForCell:cell];
+        
+        // get the string in the array based on the item in the table view that's clicked on
+        TwitterUserPost *currentTweet = [twitterPosts objectAtIndex:indexPath.row];
+        
+        detailViewController.currentTweet = currentTweet;
+        
+        
+    }
+    
+}
+
+
 
 
 

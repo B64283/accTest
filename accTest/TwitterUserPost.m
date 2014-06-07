@@ -9,11 +9,31 @@
 #import "TwitterUserPost.h"
 
 @implementation TwitterUserPost
-
-
-
-
 @synthesize timeDate, tweetText, userIcon, name, followers,following;
+
+
+
+-(id)initWithPostInfo:(NSString*)UsertimeDate text:(NSString*)text icon:(UIImage*)icon userFollowers:(NSString*)userFollowers userFollowing:(NSString*)userFollowing userName:(NSString*)userName
+
+
+{
+   if((self = [super init]))
+   {
+    
+         userName =[name copy];
+    UsertimeDate = [timeDate copy];
+            text = [tweetText copy];
+            icon = [userIcon copy];
+   userFollowers = [followers copy];
+   userFollowing = [following copy];
+   
+   
+   
+   }
+    
+    return self;
+    
+}
 
 
 

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
+//#import <Foundation/Foundation.h>
+//#import <Accounts/Accounts.h>
+//#import <Social/Social.h>
+
 @interface CustomCell : UITableViewCell
 
 {

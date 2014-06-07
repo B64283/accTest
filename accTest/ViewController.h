@@ -11,16 +11,16 @@
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     
-    // *twitterFeed;
     
-    NSMutableArray *twitterFeed;
+    
+    NSMutableArray *twitterPosts;
     IBOutlet UITableView *MyTableView;
     
 }
--(IBAction)Reload:(id)sender;
+//-(IBAction)Reload:(id)sender;
 
 -(IBAction)onClick:(id)sender;
 -(IBAction)profile:(id)sender;
--(IBAction)refresh:(id)sender;
+-(IBAction)Refresh:(id)sender;
 
 @end
