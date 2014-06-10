@@ -22,9 +22,9 @@
     
 }
 
+@property (nonatomic, strong)NSString *timeDate;
+@property (nonatomic, strong)NSString *tweetText;
+@property (nonatomic, strong)UIImage *userIcon;
 
-
-
--(void)refreshCellWithInfo:(NSString*)firstString secondString:(NSString*)secondString cellImage:(UIImage*)cellImage;
-
+-(void)refreshCell;
 @end

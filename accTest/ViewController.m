@@ -22,13 +22,14 @@
 
 - (void)viewDidLoad
 {
-   //call refreshTwitter for later use has own method
+    //call refreshTwitter for later use has own method
     
     //initialize array
-    twitterPosts = [[NSMutableArray alloc]init];
+    twitterFeed = [[NSMutableArray alloc]init];
+    
     
     [self refreshTwitter];
-    
+    NSLog (@"twitterRefreshed");
     
     
     [super viewDidLoad];
@@ -59,7 +60,7 @@
                 {
                     //sucsess we have access
                     
-                   //makes array of twitter AcctStore
+                    //makes array of twitter AcctStore
                     NSArray *twitterAccts = [accountStore accountsWithAccountType:accountType];
                     if (twitterAccts != nil)
                     {
@@ -67,42 +68,55 @@
                         if (currentAccount != nil)
                         {
                             NSString *requestString = @"https://api.twitter.com/1.1/statuses/user_timeline.json";
-                           
+                            
                             //create request user timeline
                             SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:requestString] parameters:nil];
                             
                             //call set account to authenticate request
                             [request setAccount:currentAccount];
-                         //uses CodeBlock
+                            //uses CodeBlock
                             [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
                                 
-                                                                    //google search statusCode for info. 200 == ALL is Good!!
+                                //google search statusCode for info. 200 == ALL is Good!!
                                 if ((error == nil) && ([urlResponse statusCode] == 200))
                                 {
-                                   
-                                  NSArray *twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                    //return twitterFeed;
-            //create a custom object for a tableView, info can be found from dictionary twitterfeed
-                                    // NSDIctionary grabs what ever you need from the account exaple: firstPost
-                                   
                                     
-                                   ///loop through all posts returned from twitterfeed
-                                    for (NSInteger i=0; i<[twitterFeed count]; i++)
+                                    twitterFeed = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                                    
+                                    
+                                    if (twitterFeed.count != 0)
                                     {
-                            TwitterUserPost *postInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
+                                        dispatch_async(dispatch_get_main_queue(),^{
+                                            
+                                            [MyTableView reloadData];
+                                            
+                                            
+                                        });
                                         
-                                if (postInfo != nil)
-                                        {
-                                            [twitterPosts addObject:postInfo];
-                                        }
                                     }
+                                    
+                                    
+                                    //return twitterFeed;
+                                    //create a custom object for a tableView, info can be found from dictionary twitterfeed
+                                    // NSDIctionary grabs what ever you need from the account exaple: firstPost
+                                    
+                                    
+                                    ///loop through all posts returned from twitterfeed
+                                    /*for (NSInteger i=0; i<[twitterFeed count]; i++)
+                                     {
+                                     TwitterUserPost *userPostInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
+                                     
+                                     if (userPostInfo != nil)
+                                     {
+                                     [twitterPosts addObject:userPostInfo];
+                                     }
+                                     }*/
                                     
                                     //NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
                                     
-
                                     
-                                   //NSLog(@"firstPost = %@", [firstPost description]);
+                                    
+                                    //NSLog(@"firstPost = %@", [firstPost description]);
                                 }
                             }];
                         }
@@ -126,27 +140,50 @@
 }
 
 
--(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
+/*-(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
+ {
+ //TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
+ 
+ 
+ NSString *timeDate = [postDictionary valueForKey:@"created_at"];
+ NSString *userDictionary = [postDictionary objectForKey:@"user"];
+ NSString *tweetText = [postDictionary valueForKey:@"text"];
+ NSString *following = [userDictionary valueForKey:@"following"];
+ NSString *followers = [userDictionary valueForKey:@"followed"];
+ NSString *name = [userDictionary valueForKeyPath:@"name"];
+ NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
+ 
+ TwitterUserPost *userPostInfo = [[TwitterUserPost alloc]initWithPostInfo:timeDate text:tweetText icon:userIcon userFollowers:followers userFollowing:following userName:name];
+ 
+ return userPostInfo;
+ }*/
+
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
-    
-    
-    NSString *timeDate = [postDictionary valueForKey:@"created_at"];
-    NSString *userDictionary = [postDictionary objectForKey:@"user"];
-    NSString *tweetText = [postDictionary valueForKey:@"text"];
-    NSString *following = [userDictionary valueForKey:@"following"];
-    NSString *name = [userDictionary valueForKeyPath:@"name"];
-    NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
-    
-    return postInfo;
-    
-    
-    
-    
-    
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCustomCell"];
+    if (cell != nil)
+    {
+        
+        NSDictionary *tweet = twitterFeed[indexPath.row];
+        
+        NSString *timeDate = [tweet valueForKey:@"created_at"];
+        NSString *userDictionary = [tweet objectForKey:@"user"];
+        NSString *tweetText = [userDictionary valueForKey:@"text"];
+        NSString *following = [userDictionary valueForKey:@"following"];
+        NSString *followers = [userDictionary valueForKey:@"followed"];
+        NSString *name = [userDictionary valueForKeyPath:@"name"];
+        NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
+        cell.textLabel.text = tweet[@"text"];
+    }
+    return cell;
 }
 
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [twitterFeed count];
+    
+}
 
 
 
@@ -156,11 +193,11 @@
 }
 
 
-/*-(IBAction)profile:(id)sender
+-(IBAction)profile:(id)sender
 {
     
-    [self performSegueWithIdentifier:@"toProfile" sender:self];
-}*/
+    [self performSegueWithIdentifier:@"ToProfile" sender:self];
+}
 
 
 
@@ -195,53 +232,13 @@
 
 
 //returns array for count number of rows
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [twitterPosts count];
-
-}
 
 
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCustomCell"];
-        if (cell != nil)
-        {
-        
-            
-            
-            
-            TwitterUserPost *currentTweet = [twitterPosts objectAtIndex:indexPath.row];
-            
-        NSDictionary *postDictionary = [twitterPosts objectAtIndex:indexPath.row];
-           
-            NSString *timeDate = [postDictionary valueForKey:@"created_at"];
-            NSString *userDictionary = [postDictionary objectForKey:@"user"];
-            NSString *tweetText = [postDictionary valueForKey:@"text"];
-            NSString *following = [userDictionary valueForKey:@"following"];
-            NSString *name = [userDictionary valueForKeyPath:@"name"];
-            NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
-            
-   
-            
-//I know, I know, I'M doing it wrong. PLEASE HELP!!!
-            
-//im tring to do it like last time but my brains are scrambled and its seems very different
-            
-            
-            [cell refreshCellWithInfo:currentTweet.name secondString:currentTweet.tweetText cellImage:currentTweet.userIcon];
-            
-            cell.detailTextLabel.text = currentTweet.description;
-            
-        
-        }
-    
-    return cell;
-}
 
-        
+
+
 //split segue sends info to the different views
 // take the info and turn it into a string and put the string into the lable
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

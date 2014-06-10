@@ -10,9 +10,8 @@
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    
-    
-    
+    NSArray *twitterFeed;
+    //NSDictionary *postDictionary;
     NSMutableArray *twitterPosts;
     IBOutlet UITableView *MyTableView;
     
