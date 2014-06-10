@@ -29,8 +29,6 @@
     
     
     [self refreshTwitter];
-    NSLog (@"twitterRefreshed");
-    
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -86,8 +84,10 @@
                                     
                                     if (twitterFeed.count != 0)
                                     {
+                                        //codeBlock tells to send data to the tabelView
                                         dispatch_async(dispatch_get_main_queue(),^{
                                             
+                                            //reloads data to table view
                                             [MyTableView reloadData];
                                             
                                             
@@ -127,7 +127,7 @@
                 //need else cause if user says no every thing will be denied
                 else
                 {
-                    //user says NO
+                    //user says NO// can enter an error
                     
                 }
             }];
@@ -179,6 +179,8 @@
     return cell;
 }
 
+
+// counts data iN array and sets number of rows and section //returns array for count number of rows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [twitterFeed count];
@@ -192,11 +194,11 @@
     
 }
 
-
+//sends to profo=ile
 -(IBAction)profile:(id)sender
 {
     
-    [self performSegueWithIdentifier:@"ToProfile" sender:self];
+    [self performSegueWithIdentifier:@"toProfile" sender:self];
 }
 
 
@@ -216,7 +218,7 @@
     
     
 }
-//refresh twitter feed
+//refresh twitter feed works
 
 -(IBAction)Refresh:(id)sender
 {
@@ -225,17 +227,6 @@
     
     
 }
-
-
-
-
-
-
-//returns array for count number of rows
-
-
-
-
 
 
 
