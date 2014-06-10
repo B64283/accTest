@@ -14,6 +14,7 @@
 @interface CustomCell : UITableViewCell
 
 {
+  @public
     IBOutlet UILabel *firstLabel;
     IBOutlet UILabel *secondLabel;
     IBOutlet UIImageView *cellIconImage;
