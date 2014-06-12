@@ -11,17 +11,14 @@
 @interface DetailViewController : UIViewController
 {
     
-    
-    IBOutlet UILabel *DTDateLable;
-    IBOutlet UILabel *DTtextLabel;
-    IBOutlet UILabel *DTUserName;
-    
-    
+    NSDictionary *tweet;
+        
 }
 
-@property(nonatomic, strong)TwitterUserPost *currentTweet;
 
-
+@property(nonatomic, strong) NSString *DTDate;
+@property(nonatomic, strong) NSString *DTtext;
+@property(nonatomic, strong) NSString *DTUserNm;
 
 
 

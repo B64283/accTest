@@ -22,10 +22,13 @@
         
     
 }
+@property(nonatomic, strong)CustomCell *currentTweet;
 
 @property (nonatomic, strong)NSString *timeDate;
 @property (nonatomic, strong)NSString *tweetText;
 @property (nonatomic, strong)UIImage *userIcon;
-
--(void)refreshCell;
+@property (nonatomic, strong) UILabel *firstLabel;
+@property (nonatomic, strong) UILabel *secondLabel;
+@property (nonatomic, strong)UIImageView *cellIconImage;
+-(void)refreshCellWithInfo:(NSString*)firstString secondString:(NSString*)secondString cellImage:(UIImage*)cellImage;
 @end

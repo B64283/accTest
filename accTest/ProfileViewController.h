@@ -10,18 +10,18 @@
 #import "TwitterUserPost.h"
 @interface ProfileViewController : UIViewController
 {
-    IBOutlet UILabel *profileUserNameLable;
+    NSDictionary *tweet;    NSArray *twitterFeed;
+  IBOutlet UILabel *profileUserNameLable;
+ IBOutlet    UILabel *profileFollowingLable;
+   IBOutlet  UILabel *profileFollowedLable;
+   IBOutlet  UILabel *profileDetailsLable;
     
-    IBOutlet UILabel *profileFollowingLable;
-    IBOutlet UILabel *profileFollowedLable;
-    IBOutlet UILabel *profileDetailsLable;
-    
-    
-    
-    
-}
-
-@property (nonatomic,strong)TwitterUserPost *currentProfile;
+    }
+//made up strings
+@property(nonatomic, strong) NSString *PROname;
+@property(nonatomic, strong) NSNumber *PROFollow;
+@property(nonatomic, strong) NSString *PROdesc;
+@property(nonatomic, strong) NSNumber *PROfollowing;
 
 
 @end

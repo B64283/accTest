@@ -12,9 +12,17 @@
 
 @interface DetailViewController ()
 
+@property(nonatomic, weak)IBOutlet UILabel *DTDateLable;
+@property(nonatomic, weak)IBOutlet UILabel *DTUserName;
+@property(nonatomic, weak)IBOutlet UILabel *DTtextLabel;
+
+
+
 @end
 
 @implementation DetailViewController
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,7 +35,12 @@
 
 - (void)viewDidLoad
 {
+    //label then string
+    self.DTDateLable.text = self.DTDate;
+    self.DTtextLabel.text = self.DTtext;
+    self.DTUserName.text = self.DTUserNm;
     
+
 [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -40,9 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    DTDateLable.text = self.currentTweet.timeDate;
-    DTtextLabel.text = self.currentTweet.tweetText;
-    DTUserName.text = self.currentTweet.name;
+    
 }
 
 

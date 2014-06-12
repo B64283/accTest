@@ -10,16 +10,27 @@
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    //NSArray *twitterFeed;
+    NSArray *twitterFeed;
     //NSDictionary *postDictionary;
     NSMutableArray *twitterPosts;
     IBOutlet UITableView *MyTableView;
-    
+    NSDictionary *tweet;
+    NSString *tweetText;
+    NSString *timeDate;
+    UIImage *userIcon;
+    NSNumber *followers;
+    NSString *name;
+    NSNumber *following;
+    NSString *description;
+
+
+
 }
 //-(IBAction)Reload:(id)sender;
 
 -(IBAction)onClick:(id)sender;
 -(IBAction)profile:(id)sender;
 -(IBAction)Refresh:(id)sender;
+
 
 @end

@@ -19,25 +19,14 @@
 {
    if((self = [super init]))
    {
-    
-         userName =[name copy];
-    UsertimeDate = [timeDate copy];
-            text = [tweetText copy];
-            icon = [userIcon copy];
-   userFollowers = [followers copy];
-   userFollowing = [following copy];
-   
-   
+       
+              
    
    }
     
     return self;
     
 }
-
-
-
-
 
 
 
