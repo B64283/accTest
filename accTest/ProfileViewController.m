@@ -16,7 +16,7 @@
 
 @implementation ProfileViewController
 
-@synthesize PROfollowing,PROname,PROFollow,PROdesc;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,11 +30,12 @@
 - (void)viewDidLoad
 {
     
-    
-    profileUserNameLable.text = PROname;
-     profileFollowingLable.text = PROfollowing;
-     profileFollowedLable.text = PROFollow;
-    profileDetailsLable.text = PROdesc;
+    self->ProfFullName.text = self.twitterFullName;
+    self->ProfUserName.text = self.twitterUserName;
+    self->ProfFollow.text = self.twitterFollow;
+    self->ProfDetail.text = self.twitterDetail;
+    self->ProfFollowing.text = self.twitterFollowing;
+    self->ProfUserIcon.image = self.twitterIconPict;
     
     
     

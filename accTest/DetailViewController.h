@@ -7,19 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TwitterUserPost.h"
+//#import "TwitterUserPost.h"
 @interface DetailViewController : UIViewController
 {
-    
-    NSDictionary *tweet;
-        
+    IBOutlet UILabel *DeetFullName;
+    IBOutlet UILabel *DeetUserName;
+    IBOutlet UILabel *DeetPost;
+    IBOutlet UILabel *DeetDateTime;
+    IBOutlet UIImageView *DeetUserIcon;
 }
 
 
-@property(nonatomic, strong) NSString *DTDate;
-@property(nonatomic, strong) NSString *DTtext;
-@property(nonatomic, strong) NSString *DTUserNm;
-
+@property(nonatomic, strong) NSString *twitterFullName;
+@property(nonatomic, strong) NSString *twitterUserName;
+@property(nonatomic, strong) NSString *twitterPost;
+@property(nonatomic, strong) NSString *twitterDateTime;
+@property(nonatomic, strong) UIImage *twitterIconPict;
 
 
 

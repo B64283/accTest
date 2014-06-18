@@ -17,17 +17,6 @@
     
     
 }
-@property (nonatomic, strong)NSString *name;
-@property (nonatomic, strong)NSString *timeDate;//
-@property (nonatomic, strong)NSString *tweetText;//
-@property (nonatomic, strong)UIImage *userIcon;//
-//@property (nonatomic, strong)UIImage *userIcon;
-@property (nonatomic,strong)NSNumber *followers;//
-@property (nonatomic,strong)NSNumber *following;//
-
-
--(id)initWithPostInfo:(NSString*)UsertimeDate text:(NSString*)text icon:(UIImage*)icon userFollowers:(NSNumber*)userFollowers userFollowing:(NSNumber*)userFollowing userName:(NSString*)userName;
-
 
 
 

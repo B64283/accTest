@@ -12,11 +12,6 @@
 
 @interface DetailViewController ()
 
-@property(nonatomic, weak)IBOutlet UILabel *DTDateLable;
-@property(nonatomic, weak)IBOutlet UILabel *DTUserName;
-@property(nonatomic, weak)IBOutlet UILabel *DTtextLabel;
-
-
 
 @end
 
@@ -36,10 +31,11 @@
 - (void)viewDidLoad
 {
     //label then string
-    self.DTDateLable.text = self.DTDate;
-    self.DTtextLabel.text = self.DTtext;
-    self.DTUserName.text = self.DTUserNm;
-    
+    self->DeetFullName.text = self.twitterFullName;
+    self->DeetUserName.text = self.twitterUserName;
+    self->DeetPost.text = self.twitterPost;
+    self->DeetDateTime.text = self.twitterDateTime;
+    self->DeetUserIcon.image = self.twitterIconPict;
 
 [super viewDidLoad];
     // Do any additional setup after loading the view.

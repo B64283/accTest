@@ -51,6 +51,17 @@
         ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
         if (accountType != nil)
         {
+            //set UIalertView
+            alert = [[UIAlertView alloc]initWithTitle:@"fetching Tweets" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            
+            //set indicator
+            indicate = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            indicate.hidesWhenStopped = YES;
+            indicate.center = CGPointMake(390, 590);
+            [self.view addSubview:indicate];
+            [indicate startAnimating];
+            [alert show];
+            
             //ask twitter for accsess
             [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
                 if (granted)
@@ -83,7 +94,7 @@
                                     
                                     if (twitterFeed.count != 0)
                                     {
-                                        //codeBlock tells to send data to the tabelView
+                                        //codeBlock tells to send data to the tabelView faster
                                         dispatch_async(dispatch_get_main_queue(),^{
                                             
                                             //reloads data to table view
@@ -93,34 +104,11 @@
                                         });
                                         
                                     }
-                                    
-                                    
-                                    //return twitterFeed;
-                                    //create a custom object for a tableView, info can be found from dictionary twitterfeed
-                                    // NSDIctionary grabs what ever you need from the account exaple: firstPost
-                                    
-                                    
-                                    ///loop through all posts returned from twitterfeed
-                                    /*for (NSInteger i=0; i<[twitterFeed count]; i++)
-                                     {
-                                     TwitterUserPost *userPostInfo = [self createPostInfoFromDictionary:[twitterFeed objectAtIndex:i]];
-                                     
-                                     if (userPostInfo != nil)
-                                     {
-                                     [twitterPosts addObject:userPostInfo];
-                                     }
-                                     }*/
-                                    
-                                   // NSDictionary *firstPost = [twitterFeed objectAtIndex:0];
-                                    
-                                    
-                                    
-                                    //NSLog(@"firstPost = %@", [firstPost description]);
                                 }
                             }];
                         }
                         
-                        //NSLog(@"twitterAccounts=%@",twitterAccts);
+                        
                     }
                 }
                 //need else cause if user says no every thing will be denied
@@ -132,30 +120,8 @@
             }];
         }
     }
-    
-    
-    
-    
 }
 
-
-/*-(TwitterUserPost*)createPostInfoFromDictionary:(NSDictionary*)postDictionary
- {
- //TwitterUserPost *postInfo = [[TwitterUserPost alloc]init];
- 
- 
- NSString *timeDate = [postDictionary valueForKey:@"created_at"];
- NSString *userDictionary = [postDictionary objectForKey:@"user"];
- NSString *tweetText = [postDictionary valueForKey:@"text"];
- NSString *following = [userDictionary valueForKey:@"following"];
- NSString *followers = [userDictionary valueForKey:@"followed"];
- NSString *name = [userDictionary valueForKeyPath:@"name"];
- NSData *userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
- 
- TwitterUserPost *userPostInfo = [[TwitterUserPost alloc]initWithPostInfo:timeDate text:tweetText icon:userIcon userFollowers:followers userFollowing:following userName:name];
- 
- return userPostInfo;
- }*/
 
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,27 +129,48 @@
     CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCustomCell"];
     if (cell != nil)
     {
+        NSDictionary *tweetDictionary = [twitterFeed objectAtIndex:indexPath.row];
         
-        tweet = twitterFeed[indexPath.row];
+        cell.postText = [tweetDictionary valueForKey:@"text"];
         
-        timeDate = [tweet valueForKey:@"created_at"];
-        NSString *userDictionary = [tweet objectForKey:@"user"];
-        tweetText = [userDictionary valueForKey:@"text"];
-        following = [userDictionary valueForKey:@"following"];
-        followers = [userDictionary valueForKey:@"followed"];
-        name = [userDictionary valueForKeyPath:@"name"];
-        userIcon = [userDictionary valueForKey:@"profile_image_url_https"];
+        NSDictionary *userDictionary = [tweetDictionary objectForKey:@"user"];
+        if (userDictionary != nil)
+        {
+        Image = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:[userDictionary valueForKey:@"profile_image_url_https"]]];
         
-        UIImage *Icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userIcon ]]];
-        cell.secondLabel.text = tweet[@"text"];
-        cell.firstLabel.text = timeDate;
-        cell.cellIconImage.image = Icon;
         
-        cell.detailTextLabel.text = twitterFeed.description;
+            NameString = [NSString stringWithFormat:@"%@", [userDictionary valueForKey:@"name"]];
         
+            UserString = [NSString stringWithFormat:@"%@",[userDictionary valueForKey:@"screen_name"]];
+            detailString = [NSString stringWithFormat:@"%@", [userDictionary valueForKey:@"description"]];
+            followersString = [NSString stringWithFormat:@"%@",[userDictionary valueForKey:@"followers_count"]];
+            followingString = [NSString stringWithFormat:@"%@",[userDictionary valueForKey:@"friends_count"]];
+            
+            NSDateFormatter *format = [[NSDateFormatter alloc]init];
+            [format setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+            
+            NSDate *date = [format dateFromString:[tweetDictionary valueForKey:@"created_at"]];
+            [format setDateFormat:@"eee, MMM dd yyyy h:mm a"];
+            
+            dateString = [format stringFromDate:date];
+            
+            cell.IconPict = [[UIImage alloc]initWithData:Image];
+            cell.fullNameText = NameString;
+            cell.userNameText = UserString;
+            cell.DateTimeText = dateString;
+           [alert dismissWithClickedButtonIndex:0 animated:YES]; 
+            
+        }
+        
+        [cell refreshCell];
+        [indicate stopAnimating];
+        return cell;
+    
+    
     }
-    return cell;
+    return nil;
 }
+
 
 
 // counts data iN array and sets number of rows and section //returns array for count number of rows
@@ -204,7 +191,7 @@
 -(IBAction)profile:(id)sender
 {
     
-    [self performSegueWithIdentifier: @"toProfile" sender: self];
+    [self performSegueWithIdentifier: @"toProfile" sender:self];
 }
 
 
@@ -230,53 +217,65 @@
 {
     
     [self refreshTwitter];
-    
-    
 }
+
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *tweetDictionary = [twitterFeed objectAtIndex:indexPath.row];
+    
+    
+    NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    [format setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+    
+    NSDate *date = [format dateFromString:[tweetDictionary valueForKey:@"created_at"]];
+    [format setDateFormat:@"eee, MMM dd yyyy h:mm a"];
+    
+    dateString = [format stringFromDate:date];
+    
+  
+    detailPost = [tweetDictionary valueForKey:@"text"];
+    dateString = [tweetDictionary valueForKey:@"created_at"];
+    
+    [self performSegueWithIdentifier:@"ToDetailViewController" sender:self];
+
+    return nil;
+}
+
+
+
+
+
 
 //split segue sends info to the different views
 // take the info and turn it into a string and put the string into the lable
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //get path for selected row
-    NSIndexPath *Path = [MyTableView indexPathForSelectedRow];
-    //get data from the tweet selected
-    tweet = [twitterFeed objectAtIndex:Path.row];
-    NSDictionary *userDictionary = [tweet objectForKey:@"user"];
-if ([segue.identifier isEqualToString:@"ToDetailViewController"])
-        
-    {
+   if ([segue.identifier isEqualToString:@"ToDetailViewController"])
+   {
+     
+       DetailViewController *destView = segue.destinationViewController;
+      
+       destView.twitterPost = detailPost;
+       destView.twitterIconPict = [[UIImage alloc]initWithData:Image];
+       destView.twitterFullName = NameString;
+       destView.twitterUserName = UserString;
+       destView.twitterDateTime = dateString;
        
-        // update variables with selected tweet/cell values
-        tweetText = [tweet valueForKey:@"text"];
-        timeDate = [tweet valueForKey:@"created_at"];
-        name = [userDictionary valueForKeyPath:@"name"];
-        
-        //grabs the selected viewcontroller
-        DetailViewController *detVC = segue.destinationViewController;
        
-        //place objects into lables
-        detVC.DTUserNm = name;
-        detVC.DTDate = timeDate;
-        detVC.DTtext = tweetText;
-        
-    }
+}
     else if ([segue.identifier isEqualToString:@"toProfile"])
         
     {
+        ProfileViewController *ProfView = segue.destinationViewController;
         
-        description = [userDictionary valueForKey:@"description"];
-        name = [userDictionary valueForKeyPath:@"name"];
-        followers = [userDictionary valueForKey:@"followers_count"];
-        following = [userDictionary valueForKey:@"friends_count"];
+        ProfView.twitterIconPict = [[UIImage alloc]initWithData:Image];
+        ProfView.twitterFullName = NameString;
+        ProfView.twitterUserName = UserString;
+        ProfView.twitterDetail = detailString;
+        ProfView.twitterFollowing = followersString;
+        ProfView.twitterFollow = followingString;
         
-        ProfileViewController *proVC = segue.destinationViewController;
-        NSString *followersString = [followers stringValue];
-        NSString *followingString = [following stringValue];
-        proVC.PROname = name;
-        proVC.PROdesc = description;
-        proVC.PROFollow = following;
-        proVC.PROfollowing = followers;
     }
     
     

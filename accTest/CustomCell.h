@@ -14,21 +14,20 @@
 @interface CustomCell : UITableViewCell
 
 {
-  @public
-    IBOutlet UILabel *firstLabel;
-    IBOutlet UILabel *secondLabel;
-    IBOutlet UIImageView *cellIconImage;
-    
-        
+    IBOutlet UILabel *cellFullName;
+    IBOutlet UILabel *cellUserName;
+    IBOutlet UILabel *cellPost;
+    IBOutlet UILabel *cellDateTime;
+    IBOutlet UIImageView *cellUserIcon;
     
 }
-@property(nonatomic, strong)CustomCell *currentTweet;
 
-@property (nonatomic, strong)NSString *timeDate;
-@property (nonatomic, strong)NSString *tweetText;
-@property (nonatomic, strong)UIImage *userIcon;
-@property (nonatomic, strong) UILabel *firstLabel;
-@property (nonatomic, strong) UILabel *secondLabel;
-@property (nonatomic, strong)UIImageView *cellIconImage;
--(void)refreshCellWithInfo:(NSString*)firstString secondString:(NSString*)secondString cellImage:(UIImage*)cellImage;
+-(void)refreshCell;
+
+@property(nonatomic, strong) NSString *fullNameText;
+@property(nonatomic, strong) NSString *UserNameText;
+@property(nonatomic, strong) NSString *postText;
+@property(nonatomic, strong) NSString *DateTimeText;
+@property(nonatomic, strong) UIImage *IconPict;
+
 @end

@@ -9,7 +9,7 @@
 #import "CustomCell.h"
 
 @implementation CustomCell
-@synthesize timeDate, tweetText,userIcon,firstLabel,secondLabel,cellIconImage;
+@synthesize fullNameText,DateTimeText, UserNameText, postText,IconPict;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -35,11 +35,16 @@
 
 
 
--(void)refreshCellWithInfo:(NSString*)firstString secondString:(NSString*)secondString cellImage:(UIImage*)cellImage
+-(void)refreshCell
 
 {
-    firstLabel.text = firstString;
-    secondLabel.text = secondString;
-    cellIconImage.image = cellImage;
+    cellFullName.text = fullNameText;
+    cellDateTime.text = DateTimeText;
+    cellUserName.text = UserNameText;
+    cellPost.text = postText;
+    cellUserIcon.Image = IconPict;
+    
+    
+    
 }
 @end
